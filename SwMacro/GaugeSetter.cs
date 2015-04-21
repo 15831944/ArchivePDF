@@ -208,7 +208,7 @@ namespace ArchivePDF.csproj
 
                         //System.Diagnostics.Debug.Print("::{0}:", swDim.FullName);
 
-                        if (swDispDim.GetText((Int32)swDimensionTextParts_e.swDimensionTextCalloutBelow).Contains("GA"))
+                        if (swDispDim.GetText((Int32)swDimensionTextParts_e.swDimensionTextCalloutBelow).EndsWith("GA"))
                         {
                             //System.Diagnostics.Debug.Print("GA");
                             Double og;

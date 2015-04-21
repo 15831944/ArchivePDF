@@ -51,12 +51,48 @@ namespace ArchivePDF.csproj
             get { return _metalPath; }
             set { _metalPath = value; }
         }
-	
-	
+
+        private bool _saveFirst;
+
+        public bool SaveFirst
+        {
+            get { return _saveFirst; }
+            set { _saveFirst = value; }
+        }
+
+        private bool _exportPdf;
+
+        public bool ExportPDF
+        {
+            get { return _exportPdf; }
+            set { _exportPdf = value; }
+        }
+
+        private bool _exportEDrw;
+
+        public bool ExportEDrw
+        {
+            get { return _exportEDrw; }
+            set { _exportEDrw = value; }
+        }
+
+        private bool _exportImg;
+
+        public bool ExportImg
+        {
+            get { return _exportImg; }
+            set { _exportImg = value; }
+        }
+
+
         //"GaugePath" : "\\\\AMSTORE-SVR-22\\cad\\Solid Works\\SolidWorks Data\\lang\\english\\ARCHIVE\\gaugesetter.xls"
         //"ShtFmtPath" : "\\\\AMSTORE-SVR-22\\cad\\Solid Works\\AMSTORE_SHEET_FORMATS\\zPostCard.slddrt"
         //"JPGPath" : "\\\\AMSTORE-SVR-01\\details\\JPGs\\"
         //"KPath" : "\\\\AMSTORE-SVR-01\\details\\"
         //"GPath" : "\\\\AMSTORE-SVR-22\\cad\\PDF ARCHIVE\\"
+        //"SaveFirst" : True
+        //"ExportPDF" : True
+        //"ExportEDrw" : True
+        //"ExportImg" : True
     }
 }

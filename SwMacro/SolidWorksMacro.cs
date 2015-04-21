@@ -12,6 +12,10 @@ namespace ArchivePDF.csproj
         public void Main()
         {
             string jsonPath = @"\\AMSTORE-SVR-22\cad\Solid Works\Amstore_Macros\ArchivePDF.json";
+
+            if (System.IO.File.Exists(@"C:\Optimize\ArchivePDF.json"))
+                jsonPath = @"C:\Optimize\ArchivePDF.json";
+            
             string json = string.Empty;
 
             if (System.IO.File.Exists(jsonPath))
@@ -38,30 +42,34 @@ namespace ArchivePDF.csproj
             }
 
             // Saving first.
-            try
+            if (APathSet.SaveFirst)
             {
-                Frame swFrams = (Frame)swApp.Frame();
-                ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
-                Int32 errors = 0;
-                Int32 warnings = 0;
-                swFrams.SetStatusBarText("Saving ... this is usually the most time consuming part ...");
-                swModel.Save3((Int32)swSaveAsOptions_e.swSaveAsOptions_Silent, ref errors, ref warnings);
-            }
-            catch (ExportPDFException e)
-            {
-                //PDFArchiver._sendErrMessage(e, swApp);
-                ErrMsg em = new ErrMsg(e);
-                em.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                //PDFArchiver._sendErrMessage(ex, swApp);
-                ErrMsg em = new ErrMsg(ex);
-                em.ShowDialog();
+                try
+                {
+                    Frame swFrams = (Frame)swApp.Frame();
+                    ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+                    Int32 errors = 0;
+                    Int32 warnings = 0;
+                    swFrams.SetStatusBarText("Saving ... this is usually the most time consuming part ...");
+                    swModel.Save3((Int32)swSaveAsOptions_e.swSaveAsOptions_Silent, ref errors, ref warnings);
+                }
+                catch (ExportPDFException e)
+                {
+                    //PDFArchiver._sendErrMessage(e, swApp);
+                    ErrMsg em = new ErrMsg(e);
+                    em.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    //PDFArchiver._sendErrMessage(ex, swApp);
+                    ErrMsg em = new ErrMsg(ex);
+                    em.ShowDialog();
+                }
             }
 
-            if (this.ExportPdfs())
-                this.ExportThumbnail();
+            if (APathSet.ExportPDF)
+                if (this.ExportPdfs())
+                    this.ExportThumbnail();
 
         }
 
@@ -76,7 +84,10 @@ namespace ArchivePDF.csproj
                 gs.Close();
 
                 PDFArchiver pda = new PDFArchiver(ref swApp, APathSet);
-                res = ( pda.ExportPdfs() && pda.ExportEDrawings() );
+                res = (pda.ExportPdfs());
+                
+                if (APathSet.ExportEDrw)
+                    res = res && pda.ExportEDrawings();
             }
             catch (GaugeSetterException gEx)
             {
@@ -102,22 +113,25 @@ namespace ArchivePDF.csproj
 
         private void ExportThumbnail()
         {
-            try
+            if (APathSet.ExportImg)
             {
-                Thumbnailer thN = new Thumbnailer(swApp, APathSet);
-                thN.CreateThumbnail();
-                thN.SaveAsJPG(APathSet.JPGPath);
-                thN.CloseThumbnail();
-            }
-            catch (ThumbnailerException thEx)
-            {
-                ErrMsg em = new ErrMsg(thEx);
-                em.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                ErrMsg em = new ErrMsg(ex);
-                em.ShowDialog();
+                try
+                {
+                    Thumbnailer thN = new Thumbnailer(swApp, APathSet);
+                    thN.CreateThumbnail();
+                    thN.SaveAsJPG(APathSet.JPGPath);
+                    thN.CloseThumbnail();
+                }
+                catch (ThumbnailerException thEx)
+                {
+                    ErrMsg em = new ErrMsg(thEx);
+                    em.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    ErrMsg em = new ErrMsg(ex);
+                    em.ShowDialog();
+                }
             }
         }
 
