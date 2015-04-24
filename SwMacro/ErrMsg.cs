@@ -33,7 +33,6 @@ namespace ArchivePDF.csproj
             if (e.Data.Count > 0)
             {
                 msg.AppendFormat("\r\n\r\nData:\r\n");
-
                 foreach (KeyValuePair<object, object> kp in e.Data)
                     msg.AppendFormat("{0} => {1}", kp.Key.ToString(), kp.Value.ToString());
             }

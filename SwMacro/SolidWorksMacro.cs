@@ -70,6 +70,8 @@ namespace ArchivePDF.csproj
             if (APathSet.ExportPDF)
                 if (this.ExportPdfs())
                     this.ExportThumbnail();
+                else
+                    throw new ExportPDFException("Failed to save PDF.");
 
         }
 

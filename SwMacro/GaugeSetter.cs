@@ -88,20 +88,20 @@ namespace ArchivePDF.csproj
             else
             {
                 GaugeSetterException gEx = new GaugeSetterException(String.Format("Error opening '{0}'.", wkBkPath));
-                gEx.Data.Add("updateLinks", updateLinks);
-                gEx.Data.Add("readOnly", readOnly);
-                gEx.Data.Add("format", format);
-                gEx.Data.Add("passwd", passwd);
-                gEx.Data.Add("wtResPaswd", wtResPswd);
-                gEx.Data.Add("ignoreReadOnly", ignoreReadOnly);
-                gEx.Data.Add("platform", platform);
-                gEx.Data.Add("delimiter", delimiter);
-                gEx.Data.Add("editable", editable);
-                gEx.Data.Add("notify", notify);
-                gEx.Data.Add("converter", converter);
-                gEx.Data.Add("addToMru", addToMru);
-                gEx.Data.Add("local", local);
-                gEx.Data.Add("corruptLoad", corruptLoad);
+                //gEx.Data.Add("updateLinks", updateLinks);
+                //gEx.Data.Add("readOnly", readOnly);
+                //gEx.Data.Add("format", format);
+                //gEx.Data.Add("passwd", passwd);
+                //gEx.Data.Add("wtResPaswd", wtResPswd);
+                //gEx.Data.Add("ignoreReadOnly", ignoreReadOnly);
+                //gEx.Data.Add("platform", platform);
+                //gEx.Data.Add("delimiter", delimiter);
+                //gEx.Data.Add("editable", editable);
+                //gEx.Data.Add("notify", notify);
+                //gEx.Data.Add("converter", converter);
+                //gEx.Data.Add("addToMru", addToMru);
+                //gEx.Data.Add("local", local);
+                //gEx.Data.Add("corruptLoad", corruptLoad);
                 throw gEx;
             }
 

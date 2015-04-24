@@ -230,8 +230,8 @@ namespace ArchivePDF.csproj
                     break;
                 default:
                     ExportPDFException e = new ExportPDFException("Document type error.");
-                    e.Data.Add("who", System.Environment.UserName);
-                    e.Data.Add("when", DateTime.Now);
+                    //e.Data.Add("who", System.Environment.UserName);
+                    //e.Data.Add("when", DateTime.Now);
                     throw e;
             }
 
@@ -272,11 +272,13 @@ namespace ArchivePDF.csproj
         /// <returns>Returns a <see cref="System.Boolean"/>, indicating success.</returns>
         private Boolean SaveFiles(List<String> fl)
         {
+            Int32 tries = 9;
             Int32 saveVersion = (Int32)swSaveAsVersion_e.swSaveAsCurrentVersion;
             Int32 saveOptions = (Int32)swSaveAsOptions_e.swSaveAsOptions_Silent;
             Int32 refErrors = 0;
             Int32 refWarnings = 0;
             Boolean success = true;
+
             foreach (String fileName in fl)
             {
                 //System.Diagnostics.Debug.Print(">>{0}<<", fileName);
@@ -286,14 +288,25 @@ namespace ArchivePDF.csproj
                     if (!CreatePath(fileName))
                     {
                         ExportPDFException e = new ExportPDFException("Unable to save file, folder could not be created.");
-                        e.Data.Add("who", System.Environment.UserName);
-                        e.Data.Add("when", DateTime.Now);
+                        //e.Data.Add("who", System.Environment.UserName);
+                        //e.Data.Add("when", DateTime.Now);
                         throw e;
                     }
 
                     swFrame.SetStatusBarText(String.Format("Exporting '{0}'", fileName));
-                    success = swModel.SaveAs4(fileName, saveVersion, saveOptions, ref refErrors, ref refWarnings);
-                    //System.Windows.Forms.MessageBox.Show("Savefile: " + fileName);
+
+                    if (System.IO.File.Exists(fileName))
+                        System.IO.File.Delete(fileName);
+
+                    do
+                    {
+                        success = swModel.SaveAs4(fileName, saveVersion, saveOptions, ref refErrors, ref refWarnings);
+                        swFrame.SetStatusBarText(String.Format("Exporting '{0}': try {1}", fileName, --tries));
+                    } while (!System.IO.File.Exists(fileName) && tries > 0);
+
+                    if (!System.IO.File.Exists(fileName))
+                        success = false;
+
                     if (success)
                     {
                         swFrame.SetStatusBarText(String.Format("Exported '{0}'", fileName));
@@ -301,8 +314,8 @@ namespace ArchivePDF.csproj
                     else
                     {
                         ExportPDFException e = new ExportPDFException(String.Format("Failed to save '{0}'", fileName));
-                        e.Data.Add("who", System.Environment.UserName);
-                        e.Data.Add("when", DateTime.Now);
+                        //e.Data.Add("who", System.Environment.UserName);
+                        //e.Data.Add("when", DateTime.Now);
                         throw e;
                     }
                 }
@@ -332,9 +345,9 @@ namespace ArchivePDF.csproj
             if (result.Length != 3)
             {
                 ExportPDFException e = new ExportPDFException("Check to make sure drawing is at least revision AA or later.");
-                e.Data.Add("who", System.Environment.UserName);
-                e.Data.Add("when", DateTime.Now);
-                e.Data.Add("result", result);
+                //e.Data.Add("who", System.Environment.UserName);
+                //e.Data.Add("when", DateTime.Now);
+                //e.Data.Add("result", result);
                 throw e;
             }
 
@@ -346,22 +359,22 @@ namespace ArchivePDF.csproj
             if (swModel == null)
             {
                 ExportPDFException e = new ExportPDFException("You must have a drawing document open.");
-                e.Data.Add("who", System.Environment.UserName);
-                e.Data.Add("when", DateTime.Now);
+                //e.Data.Add("who", System.Environment.UserName);
+                //e.Data.Add("when", DateTime.Now);
                 return false;
             }
             else if ((Int32)swModel.GetType() != (Int32)swDocumentTypes_e.swDocDRAWING)
             {
                 ExportPDFException e = new ExportPDFException("You must have a drawing document open.");
-                e.Data.Add("who", System.Environment.UserName);
-                e.Data.Add("when", DateTime.Now);
+                //e.Data.Add("who", System.Environment.UserName);
+                //e.Data.Add("when", DateTime.Now);
                 return false;
             }
             else if (swModel.GetPathName() == String.Empty)
             {
                 ExportPDFException e = new ExportPDFException("You must first save drawing before attempting to archive PDF.");
-                e.Data.Add("who", System.Environment.UserName);
-                e.Data.Add("when", DateTime.Now);
+                //e.Data.Add("who", System.Environment.UserName);
+                //e.Data.Add("when", DateTime.Now);
                 return false;
             }
             else
