@@ -2,10 +2,6 @@
 
 This gizmo archives SolidWorks drawings.
 
-## TODO
-- Don't save jpg on part docs
-- Make GaugeSetter.cs stop catching things like "GAP" and "GATE".
-
 ## References 
 - microsoft.office.interop.excel 
 - Newtonsoft.Json 
