@@ -39,7 +39,8 @@ namespace ArchivePDF.csproj
         public GaugeSetter(SldWorks sw, PathSet ps)
         {
             swApp = sw;
-            string fileName = ps.GaugePath;
+            this.APathSet = ps;
+            string fileName = this.APathSet.GaugePath;
 
             _setupSW();
             _loadXLFile(fileName);
@@ -261,11 +262,14 @@ namespace ArchivePDF.csproj
                             }
                             if (gaugeNotFound)
                             {
-                                StringBuilder sb = new StringBuilder("Nonstandard gauge thickness detected:\n");
-                                sb.AppendFormat("{0} in {1} = {2}", swDim.Name, swView.Name, ourGauge);
-                                swApp.SendMsgToUser2(sb.ToString()
-                                    , (int)swMessageBoxIcon_e.swMbWarning
-                                    , (int)swMessageBoxBtn_e.swMbOk);
+                                if (!this.APathSet.SilenceGaugeErrors)
+                                {
+                                    StringBuilder sb = new StringBuilder("Nonstandard gauge thickness detected:\n");
+                                    sb.AppendFormat("{0} in {1} = {2}", swDim.Name, swView.Name, ourGauge);
+                                    swApp.SendMsgToUser2(sb.ToString()
+                                        , (int)swMessageBoxIcon_e.swMbWarning
+                                        , (int)swMessageBoxBtn_e.swMbOk);
+                                }
                                 gaugeNotFound = false;
                             }
                         }
@@ -279,5 +283,14 @@ namespace ArchivePDF.csproj
             swDraw.ForceRebuild();
             swFrame.SetStatusBarText(String.Empty);
         }
+
+        private PathSet _pathSet;
+
+        public PathSet APathSet
+        {
+            get { return _pathSet; }
+            set { _pathSet = value; }
+        }
+
     }
 }

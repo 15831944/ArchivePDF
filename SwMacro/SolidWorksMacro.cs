@@ -81,13 +81,13 @@ namespace ArchivePDF.csproj
             // Checking gauge, and exporting.
             try
             {
-                GaugeSetter gs = new GaugeSetter(swApp);
+                GaugeSetter gs = new GaugeSetter(swApp, this.APathSet);
                 gs.CheckAndUpdateGaugeNotes();
                 gs.Close();
 
                 PDFArchiver pda = new PDFArchiver(ref swApp, APathSet);
                 res = (pda.ExportPdfs());
-                
+
                 if (APathSet.ExportEDrw)
                     res = res && pda.ExportEDrawings();
             }

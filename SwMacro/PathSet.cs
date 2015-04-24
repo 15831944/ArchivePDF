@@ -60,6 +60,14 @@ namespace ArchivePDF.csproj
             set { _saveFirst = value; }
         }
 
+        private bool _silentGaugeErr;
+
+        public bool SilenceGaugeErrors
+        {
+            get { return _silentGaugeErr; }
+            set { _silentGaugeErr = value; }
+        }
+
         private bool _exportPdf;
 
         public bool ExportPDF
