@@ -120,7 +120,7 @@ namespace ArchivePDF.csproj
                 {
                     try
                     {
-                        swDraw.ActivateSheet(shtNames[x]);
+                        swDraw.ActivateSheet(shtNames[x++]);
                     }
                     catch (ArgumentOutOfRangeException e)
                     {
