@@ -67,11 +67,13 @@ namespace ArchivePDF.csproj
                 }
             }
 
-            if (APathSet.ExportPDF)
+            if (this.APathSet.ExportPDF)
                 if (this.ExportPdfs())
                     this.ExportThumbnail();
                 else
-                    throw new ExportPDFException("Failed to save PDF.");
+                    swApp.SendMsgToUser2("Failed to save PDF.",
+                        (int)swMessageBoxIcon_e.swMbStop,
+                        (int)swMessageBoxBtn_e.swMbOk);
 
         }
 
@@ -85,10 +87,10 @@ namespace ArchivePDF.csproj
                 gs.CheckAndUpdateGaugeNotes();
                 gs.Close();
 
-                PDFArchiver pda = new PDFArchiver(ref swApp, APathSet);
+                PDFArchiver pda = new PDFArchiver(ref swApp, this.APathSet);
                 res = (pda.ExportPdfs());
 
-                if (APathSet.ExportEDrw)
+                if (this.APathSet.ExportEDrw)
                     res = res && pda.ExportEDrawings();
             }
             catch (GaugeSetterException gEx)
