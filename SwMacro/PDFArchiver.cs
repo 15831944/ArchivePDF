@@ -24,77 +24,7 @@ namespace ArchivePDF.csproj
         /// Constructor
         /// </summary>
         /// <param name="sw">Requires a <see cref="SolidWorks.Interop.sldworks.SldWorks"/> type.</param>
-        public PDFArchiver(ref SldWorks sw)
-        {
-            swApp = sw;
-            this.APathSet.KPath = @"\\AMSTORE-SVR-01\details\";
-            this.APathSet.GPath = @"\\AMSTORE-SVR-22\cad\PDF ARCHIVE\";
-            this.APathSet.MetalPath = @"\\AMSTORE-SVR-02\shared\shared\general\Metals\METAL MANUFACTURING\";
-            swModel = (ModelDoc2)swApp.ActiveDoc;
-            if (DocCheck())
-            {
-                swDraw = (DrawingDoc)swModel;
-
-                if (swDraw == null)
-                {
-                    throw new ExportPDFException("You must have a Drawing Document open.");
-                }
-
-
-                String[] shtNames = (String[])swDraw.GetSheetNames();
-
-                swFrame = (Frame)swApp.Frame();
-
-                //This should find the first page with something on it.
-                Int32 x = 0;
-                while ((swView == null) && (x <= swDraw.GetSheetCount()))
-                {
-                    try
-                    {
-                        swDraw.ActivateSheet(shtNames[x]);
-                    }
-                    catch (ArgumentOutOfRangeException e)
-                    {
-                        throw new ExportPDFException("Went beyond the number of sheets.", e);
-                    }
-                    catch (Exception e)
-                    {
-                        throw e;
-                    }
-
-                    swView = (View)swDraw.GetFirstView();
-                    swView = (View)swView.GetNextView();
-                }
-
-                if (swView == null)
-                {
-                    throw new ExportPDFException("I couldn't find a View.");
-                }
-
-                sourcePath = swView.GetReferencedModelName().ToUpper().Trim();
-                drawingPath = swModel.GetPathName().ToUpper().Trim();
-
-                if (sourcePath.Contains("SLDASM"))
-                {
-                    modelType = swDocumentTypes_e.swDocASSEMBLY;
-
-                }
-                else if (sourcePath.Contains("SLDPRT"))
-                {
-                    modelType = swDocumentTypes_e.swDocPART;
-                }
-                else
-                {
-                    modelType = swDocumentTypes_e.swDocNONE;
-                }
-            }
-            else
-            {
-                ExportPDFException e = new ExportPDFException(String.Format("The drawing has to be saved, {0}.", System.Environment.UserName));
-                throw e;
-            }
-        }
-
+        /// <param name="ps">Requires a <see cref="ArchivePDF.csproj.PathSet"/></param>
         public PDFArchiver(ref SldWorks sw, ArchivePDF.csproj.PathSet ps)
         {
             swApp = sw;
@@ -116,13 +46,13 @@ namespace ArchivePDF.csproj
 
                 //This should find the first page with something on it.
                 Int32 x = 0;
-                while ((swView == null) && (x <= swDraw.GetSheetCount()))
+                do
                 {
                     try
                     {
-                        swDraw.ActivateSheet(shtNames[x++]);
+                        swDraw.ActivateSheet(shtNames[x]);
                     }
-                    catch (ArgumentOutOfRangeException e)
+                    catch (IndexOutOfRangeException e)
                     {
                         throw new ExportPDFException("Went beyond the number of sheets.", e);
                     }
@@ -133,11 +63,12 @@ namespace ArchivePDF.csproj
 
                     swView = (View)swDraw.GetFirstView();
                     swView = (View)swView.GetNextView();
-                }
+                    x++;
+                } while ((swView == null) && (x < swDraw.GetSheetCount()));
 
                 if (swView == null)
                 {
-                    throw new ExportPDFException("I couldn't find a View.");
+                    throw new ExportPDFException("I couldn't find a model anywhere in this document.");
                 }
 
                 sourcePath = swView.GetReferencedModelName().ToUpper().Trim();
