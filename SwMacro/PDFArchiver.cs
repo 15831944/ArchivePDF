@@ -175,7 +175,6 @@ namespace ArchivePDF.csproj
 
             if (swApp.GetUserPreferenceToggle((int)swUserPreferenceToggle_e.swEDrawingsOkayToMeasure))
             {
-                swApp.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swEDrawingsOkayToMeasure, true);
                 measurable = false;
             }
             else
@@ -186,6 +185,8 @@ namespace ArchivePDF.csproj
             target.Add(String.Format("{0}{1}\\{2}{3}", this.APathSet.KPath, altPath, sourceName, fFormat));
             target.Add(String.Format("{0}{1}\\{2}{3}{4}", this.APathSet.GPath, altPath, sourceName, Rev, fFormat));
 
+
+            swApp.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swEDrawingsOkayToMeasure, true);
             Boolean success = this.SaveFiles(target);
 
             if (!measurable)
