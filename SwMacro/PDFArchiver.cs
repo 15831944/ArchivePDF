@@ -194,7 +194,7 @@ namespace ArchivePDF.csproj
 
             swFrame.SetStatusBarText("Closing model.");
             swApp.CloseDoc(sourcePath);
-
+            
             return success;
         }
         /// <summary>

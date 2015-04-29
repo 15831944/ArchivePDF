@@ -68,7 +68,7 @@ namespace ArchivePDF.csproj
         {
             //Clipboard.SetText(textBox1.Text);
             string sMailToLink = @"mailto:kcjuntunen@amstore.com?subject=Error in PDF Archiver&body=" + tbxMsg.Text;
-            System.Diagnostics.Process.Start(sMailToLink);
+            System.Diagnostics.Process.Start(sMailToLink.Replace("\r\n", "%0A"));
             this.Close();
         }
 
