@@ -25,7 +25,7 @@ namespace ArchivePDF.csproj
 
         private double ourGauge;
         private bool gaugeNotFound = true;
-
+        
         public GaugeSetter(SldWorks sw)
         {
             swApp = sw;
@@ -41,11 +41,11 @@ namespace ArchivePDF.csproj
             swApp = sw;
             this.APathSet = ps;
             string fileName = this.APathSet.GaugePath;
-
+            
             _setupSW();
             _loadXLFile(fileName);
         }
-
+        
         private void _loadXLFile(String wkBkPath)
         {
             swFrame.SetStatusBarText(String.Format("Loading {0}...", wkBkPath));
