@@ -1,4 +1,4 @@
-* ArchivePDF
+* ArchivePDF v2.0
 
 This gizmo archives SolidWorks drawings.
 
@@ -9,3 +9,4 @@ This gizmo archives SolidWorks drawings.
 - SolidWorks.Interop.swconst
 *** Licenses
 GPLv2
+
