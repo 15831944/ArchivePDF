@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ArchivePDF.csproj.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="GaugePath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\AMSTORE-SVR-22\cad\Solid Works\Amstore_Macros\gauges.xml</Value>
+    </Setting>
+    <Setting Name="JPGPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\AMSTORE-SVR-01\details\JPGs\</Value>
+    </Setting>
+    <Setting Name="KPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\AMSTORE-SVR-01\details\</Value>
+    </Setting>
+    <Setting Name="GPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\AMSTORE-SVR-22\cad\PDF ARCHIVE\</Value>
+    </Setting>
+    <Setting Name="MetalPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\AMSTORE-SVR-02\shared\shared\general\Metals\METAL MANUFACTURING\</Value>
+    </Setting>
+    <Setting Name="SaveFirst" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SilenceGaugeErrors" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ExportPDF" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ExportEDrw" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ExportImg" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="table" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">dbo.GEN_DRAWINGS</Value>
+    </Setting>
+    <Setting Name="basename" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">FName</Value>
+    </Setting>
+    <Setting Name="fullpath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">FPath</Value>
+    </Setting>
+    <Setting Name="datecreated" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">DateCreated</Value>
+    </Setting>
+    <Setting Name="KMapped" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">K:\</Value>
+    </Setting>
+    <Setting Name="WriteToDb" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="metalTable" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">dbo.GEN_DRAWINGS_MTL</Value>
+    </Setting>
+    <Setting Name="connectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Server=AMSTORE-SQL-05;Database=ENGINEERING;Trusted_Connection=True;&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Server=AMSTORE-SQL-05;Database=ENGINEERING;Trusted_Connection=True;</Value>
+    </Setting>
+    <Setting Name="localJSON" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Optimize\ArchivePDF.json</Value>
+    </Setting>
+    <Setting Name="defaultJSON" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\AMSTORE-SVR-22\cad\Solid Works\Amstore_Macros\ArchivePDF.json</Value>
+    </Setting>
+    <Setting Name="GMapped" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">G:\PDF ARCHIVE\</Value>
+    </Setting>
+    <Setting Name="SMapped" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">S:\shared\general\Metals\METAL MANUFACTURING\</Value>
+    </Setting>
+    <Setting Name="LayerHeads" Type="System.Collections.Specialized.StringCollection" Scope="Application">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;AMS&lt;/string&gt;
+  &lt;string&gt;CUS&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="LayerTails" Type="System.Collections.Specialized.StringCollection" Scope="Application">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;.1-5&lt;/string&gt;
+  &lt;string&gt;.6-10&lt;/string&gt;
+  &lt;string&gt;.11-15&lt;/string&gt;
+  &lt;string&gt;.16-20&lt;/string&gt;
+  &lt;string&gt;.21-25&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="ShtFmtPath" Type="System.Collections.Specialized.StringCollection" Scope="Application">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;\\AMSTORE-SVR-22\cad\Solid Works\AMSTORE_SHEET_FORMATS\zPostCard.slddrt&lt;/string&gt;
+  &lt;string&gt;\\AMSTORE-SVR-22\cad\Solid Works\\AMSTORE_SHEET_FORMATS\\zThm.slddrt&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="BMPPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\AMSTORE-SVR-02\shared\shared\general\KOHLS\Ariba Label Images\</Value>
+    </Setting>
+    <Setting Name="WeirdArbitraryFactor" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.005</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
