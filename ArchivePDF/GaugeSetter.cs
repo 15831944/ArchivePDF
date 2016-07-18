@@ -71,7 +71,7 @@ namespace ArchivePDF.csproj {
             swDim = (Dimension)swDispDim.GetDimension2(0);
             swFrame.SetStatusBarText(String.Format("Processing '{0}' => '{1}'...", swDim.Name, swDim.Value.ToString()));
             string dimtext = swDispDim.GetText((Int32)swDimensionTextParts_e.swDimensionTextCalloutBelow);
-            if (dimtext.EndsWith(@"GA") || dimtext.EndsWith(@"GA)") {
+            if (dimtext.EndsWith(@"GA") || dimtext.EndsWith(@"GA)")) {
               Double og;
               if (!Double.TryParse(swDim.GetSystemValue2("").ToString(), out og)) {
                 throw new GaugeSetterException("Couldn't parse dimension value.");
