@@ -92,7 +92,8 @@ namespace ArchivePDF.csproj {
                     gaugeNotFound = false;
 
                     if (swDispDim.GetText((Int32)swDimensionTextParts_e.swDimensionTextCalloutBelow).Contains("(")) {
-                      gaugeString = String.Format("({0} GA)", Gauges.Gauge[i].GaugeNumber);
+                      gaugeString = String.Format("{0} GA", Gauges.Gauge[i].GaugeNumber);
+                      swDispDim.ShowParenthesis = true;
                     } else {
                       gaugeString = String.Format("{0} GA", Gauges.Gauge[i].GaugeNumber);
                     }
