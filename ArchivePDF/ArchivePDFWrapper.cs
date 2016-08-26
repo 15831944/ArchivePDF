@@ -113,6 +113,8 @@ namespace ArchivePDF.csproj {
 
         if (APathSet.ExportEDrw && !pda.MetalDrawing)
           res = res && pda.ExportEDrawings();
+      } catch (MustHaveRevException mhre) {
+        swApp.SendMsgToUser2(mhre.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
       } catch (MustSaveException mse) {
         swApp.SendMsgToUser2(mse.Message,
             (int)swMessageBoxIcon_e.swMbStop,

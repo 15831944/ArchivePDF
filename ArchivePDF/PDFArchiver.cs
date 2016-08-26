@@ -399,7 +399,7 @@ namespace ArchivePDF.csproj {
       }
 
       if (result.Length != 3) {
-        ExportPDFException e = new ExportPDFException("Check to make sure drawing is at least revision AA or later.");
+        MustHaveRevException e = new MustHaveRevException("Check to make sure drawing is at least revision AA or later.");
         //e.Data.Add("who", System.Environment.UserName);
         //e.Data.Add("when", DateTime.Now);
         //e.Data.Add("result", result);
