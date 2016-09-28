@@ -76,7 +76,7 @@ namespace ArchivePDF.csproj {
               if (!Double.TryParse(swDim.GetSystemValue2("").ToString(), out og)) {
                 throw new GaugeSetterException("Couldn't parse dimension value.");
               }
-
+              swDispDim.ShowParenthesis = true;
               ourGauge = og / 0.0254;
 
               for (int i = 0; i < Gauges.Gauge.Length; i++) {
@@ -93,7 +93,6 @@ namespace ArchivePDF.csproj {
 
                     if (swDispDim.GetText((Int32)swDimensionTextParts_e.swDimensionTextCalloutBelow).Contains("(")) {
                       gaugeString = String.Format("{0} GA", Gauges.Gauge[i].GaugeNumber);
-                      swDispDim.ShowParenthesis = true;
                     } else {
                       gaugeString = String.Format("{0} GA", Gauges.Gauge[i].GaugeNumber);
                     }
