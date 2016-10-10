@@ -1,7 +1,13 @@
 using System;
 
 namespace ArchivePDF.csproj {
-  class PathSet {
+  public class PathSet {
+    public PathSet() {
+      Initialated = false;
+    }
+
+    public bool Initialated { get; set; }
+
     private string _gaugePath;
 
     public string GaugePath {

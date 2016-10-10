@@ -11,6 +11,11 @@ namespace ArchivePDF.csproj {
       swApp = sw;
     }
 
+    public ArchivePDFWrapper(SldWorks sw, PathSet ps) {
+      swApp = sw;
+      APathSet = ps;
+    }
+
     public void Archive() {
       string jsonPath = Properties.Settings.Default.defaultJSON;
 
@@ -31,7 +36,7 @@ namespace ArchivePDF.csproj {
             (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
       } else {
 
-        if (System.IO.File.Exists(jsonPath)) {
+        if (System.IO.File.Exists(jsonPath) && !APathSet.Initialated) {
           try {
             json = System.IO.File.ReadAllText(jsonPath);
           } catch (Exception e) {
@@ -41,6 +46,7 @@ namespace ArchivePDF.csproj {
 
           try {
             APathSet = Newtonsoft.Json.JsonConvert.DeserializeObject<PathSet>(json);
+            APathSet.Initialated = true;
           } catch (Exception e) {
             ErrMsg em = new ErrMsg(e);
             em.ShowDialog();
@@ -184,7 +190,13 @@ namespace ArchivePDF.csproj {
     private PathSet _ps;
 
     private PathSet APathSet {
-      get { return _ps; }
+      get {
+        if (_ps != null) {
+          return _ps;
+        } else {
+          return new PathSet();
+        }
+      }
       set { _ps = value; }
     }
   }
