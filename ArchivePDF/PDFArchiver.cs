@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Runtime.InteropServices;
 
 using System.Data.SqlClient;
 
@@ -299,7 +300,8 @@ namespace ArchivePDF.csproj {
       Int32 refWarnings = 0;
       Boolean success = true;
       string tmpPath = Path.GetTempPath();
-
+      ModelDocExtension swModExt = default(ModelDocExtension);
+      ExportPdfData swExportPDFData = default(ExportPdfData);
 
       foreach (String fileName in fl) {
         FileInfo fi = new FileInfo(fileName);
@@ -313,9 +315,23 @@ namespace ArchivePDF.csproj {
             throw e;
           }
 
-          swFrame.SetStatusBarText(String.Format("Exporting '{0}'", fileName));
+          String[] obj = (string[])swDraw.GetSheetNames();
+          object[] objs = new object[obj.Length - 1];
+          DispatchWrapper[] dr = new DispatchWrapper[obj.Length - 1];
+          for (int i = 0; i < obj.Length - 1; i++) {
+            swDraw.ActivateSheet(obj[i]);
+            Sheet s = (Sheet)swDraw.GetCurrentSheet();
+            objs[i] = s;
+            dr[i] = new DispatchWrapper(objs[i]);
+          }
 
-          success = swModel.SaveAs4(tmpFile, saveVersion, saveOptions, ref refErrors, ref refWarnings);
+          swFrame.SetStatusBarText(String.Format("Exporting '{0}'", fileName));
+          swExportPDFData = swApp.GetExportFileData((int)swExportDataFileType_e.swExportPdfData);
+          swModExt = (ModelDocExtension)swModel.Extension;
+          success = swExportPDFData.SetSheets((int)swExportDataSheetsToExport_e.swExportData_ExportAllSheets, (dr));
+          success = swModExt.SaveAs(tmpFile, saveVersion, saveOptions, swExportPDFData, ref refErrors, ref refWarnings);
+
+          //success = swModel.SaveAs4(tmpFile, saveVersion, saveOptions, ref refErrors, ref refWarnings);
           try {
             File.Copy(tmpFile, fileName, true);
           } catch (UnauthorizedAccessException uae) {
