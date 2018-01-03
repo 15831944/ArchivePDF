@@ -40,24 +40,6 @@ namespace ArchivePDF.csproj {
         swApp.SendMsgToUser2(string.Format("You need to have a drawing open. This is a '{0}'.", docType.ToString()),
             (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
       } else {
-
-        if (System.IO.File.Exists(jsonPath) && !APathSet.Initialated) {
-          try {
-            json = System.IO.File.ReadAllText(jsonPath);
-          } catch (Exception e) {
-            ErrMsg em = new ErrMsg(e);
-            em.ShowDialog();
-          }
-
-          try {
-            APathSet = Newtonsoft.Json.JsonConvert.DeserializeObject<PathSet>(json);
-            APathSet.Initialated = true;
-          } catch (Exception e) {
-            ErrMsg em = new ErrMsg(e);
-            em.ShowDialog();
-          }
-        }
-
         // Saving first.
         if (APathSet.SaveFirst) {
 

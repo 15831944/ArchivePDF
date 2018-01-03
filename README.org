@@ -3,8 +3,6 @@
 This gizmo archives SolidWorks drawings.
 
 ** References
-
-- Newtonsoft.Json
 - SolidWorks.Interop.SldWorks
 - SolidWorks.Interop.swconst
 *** Licenses
