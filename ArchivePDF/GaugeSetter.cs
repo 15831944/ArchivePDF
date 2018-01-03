@@ -81,7 +81,7 @@ namespace ArchivePDF.csproj {
             swDim = (Dimension)swDispDim.GetDimension2(0);
             swFrame.SetStatusBarText(String.Format("Processing '{0}' => '{1}'...", swDim.Name, swDim.Value.ToString()));
             string dimtext = swDispDim.GetText((Int32)swDimensionTextParts_e.swDimensionTextCalloutBelow);
-						dimtext = dimtext.Replace(@"(", string.Empty).Replace(@")", string.Empty);
+						dimtext = dimtext.Replace(@"(", string.Empty).Replace(@")", string.Empty).Trim();
             if (gaugeRegex.IsMatch(dimtext)) {
 							string [] texts_ = dimtext.Split(' ');
 							gaugeNote = texts_[texts_.Length - 1];
