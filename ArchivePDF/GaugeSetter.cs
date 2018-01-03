@@ -104,7 +104,7 @@ namespace ArchivePDF.csproj {
                     gaugeNotFound = false;
 
 										swDispDim.ShowParenthesis = true;
-                    gaugeString = String.Format("{0} {1}", Gauges.Gauge[i].GaugeNumber, gaugeNote);
+                    gaugeString = String.Format("{0} {1}", Gauges.Gauge[i].GaugeNumber, gaugeNote.ToUpper());
                     swDispDim.SetText((int)swDimensionTextParts_e.swDimensionTextCalloutBelow, gaugeString);
                   }
               }
