@@ -89,7 +89,6 @@ namespace ArchivePDF.csproj {
               if (!Double.TryParse(swDim.GetSystemValue2("").ToString(), out og)) {
                 throw new GaugeSetterException("Couldn't parse dimension value.");
               }
-              swDispDim.ShowParenthesis = true;
               ourGauge = og / 0.0254;
 
               for (int i = 0; i < Gauges.Gauge.Length; i++) {
@@ -104,6 +103,7 @@ namespace ArchivePDF.csproj {
                     String gaugeString = String.Empty;
                     gaugeNotFound = false;
 
+										swDispDim.ShowParenthesis = true;
                     gaugeString = String.Format("{0} {1}", Gauges.Gauge[i].GaugeNumber, gaugeNote);
                     swDispDim.SetText((int)swDimensionTextParts_e.swDimensionTextCalloutBelow, gaugeString);
                   }
@@ -111,7 +111,7 @@ namespace ArchivePDF.csproj {
               if (gaugeNotFound) {
                 if (!APathSet.SilenceGaugeErrors) {
                   StringBuilder sb = new StringBuilder("Non-standard gauge thickness detected:\n");
-                  sb.AppendFormat("{0} in {1} = {2:0.000}", swDim.Name, swView.Name, ourGauge);
+									sb.AppendFormat(get_format_txt(), swDim.Name, swView.Name, ourGauge);
                   swApp.SendMsgToUser2(sb.ToString()
                       , (int)swMessageBoxIcon_e.swMbWarning
                       , (int)swMessageBoxBtn_e.swMbOk);
@@ -132,6 +132,18 @@ namespace ArchivePDF.csproj {
       }
       swFrame.SetStatusBarText(String.Empty);
     }
+
+		private string get_format_txt() {
+			int prec_ = swModel.Extension.GetUserPreferenceInteger(
+				(int)swUserPreferenceIntegerValue_e.swDetailingLinearDimPrecision,
+				(int)swUserPreferenceOption_e.swDetailingLinearDimension);
+			string format_txt_ = @"{0} in {1} = {2:0.";
+			for (int i = 0; i < prec_; i++) {
+				format_txt_ += @"0";
+			}
+			format_txt_ += @"}";
+			return format_txt_;
+		}
 
     private GaugeCollection _gauges;
 
