@@ -15,6 +15,13 @@ namespace ArchivePDF.csproj {
       set { _gaugePath = value; }
     }
 
+    private string _gaugeRegex;
+
+    public string GaugeRegex {
+      get { return _gaugeRegex; }
+      set { _gaugeRegex = value; }
+    }
+
     private string _shtFmtPath;
 
     public string ShtFmtPath {

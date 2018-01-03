@@ -4,6 +4,7 @@ using System.Text;
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
 namespace ArchivePDF.csproj {
@@ -16,12 +17,16 @@ namespace ArchivePDF.csproj {
     private View swView;
     private DisplayDimension swDispDim;
     private Dimension swDim;
+    private Regex gaugeRegex;
 
     private double ourGauge;
     private bool gaugeNotFound = true;
+		private string gaugeNote = @"GA";
 
     public GaugeSetter(SldWorks sw) {
       swApp = sw;
+
+      gaugeRegex = new Regex(@"^[0-9]{1,2}\ ?GA\.?");
 
       _setupSW();
       _loadXMLFile(Properties.Settings.Default.GaugePath);
@@ -32,8 +37,13 @@ namespace ArchivePDF.csproj {
       APathSet = ps;
       string fileName = APathSet.GaugePath;
 
-      _setupSW();
+      if (APathSet.GaugeRegex == string.Empty || APathSet.GaugeRegex == null) {
+        gaugeRegex = new Regex(@"^[0-9]{1,2}\ ?GA\.?");
+      } else {
+        gaugeRegex =  new Regex(APathSet.GaugeRegex);
+      }
 
+      _setupSW();
       _loadXMLFile(Properties.Settings.Default.GaugePath);
     }
 
@@ -71,7 +81,10 @@ namespace ArchivePDF.csproj {
             swDim = (Dimension)swDispDim.GetDimension2(0);
             swFrame.SetStatusBarText(String.Format("Processing '{0}' => '{1}'...", swDim.Name, swDim.Value.ToString()));
             string dimtext = swDispDim.GetText((Int32)swDimensionTextParts_e.swDimensionTextCalloutBelow);
-            if (dimtext.EndsWith(@"GA") || dimtext.EndsWith(@"GA)")) {
+						dimtext = dimtext.Replace(@"(", string.Empty).Replace(@")", string.Empty);
+            if (gaugeRegex.IsMatch(dimtext)) {
+							string [] texts_ = dimtext.Split(' ');
+							gaugeNote = texts_[texts_.Length - 1];
               Double og;
               if (!Double.TryParse(swDim.GetSystemValue2("").ToString(), out og)) {
                 throw new GaugeSetterException("Couldn't parse dimension value.");
