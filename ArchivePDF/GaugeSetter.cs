@@ -104,18 +104,14 @@ namespace ArchivePDF.csproj {
                     String gaugeString = String.Empty;
                     gaugeNotFound = false;
 
-                    if (swDispDim.GetText((Int32)swDimensionTextParts_e.swDimensionTextCalloutBelow).Contains("(")) {
-                      gaugeString = String.Format("{0} GA", Gauges.Gauge[i].GaugeNumber);
-                    } else {
-                      gaugeString = String.Format("{0} GA", Gauges.Gauge[i].GaugeNumber);
-                    }
+                    gaugeString = String.Format("{0} {1}", Gauges.Gauge[i].GaugeNumber, gaugeNote);
                     swDispDim.SetText((int)swDimensionTextParts_e.swDimensionTextCalloutBelow, gaugeString);
                   }
               }
               if (gaugeNotFound) {
                 if (!APathSet.SilenceGaugeErrors) {
-                  StringBuilder sb = new StringBuilder("Nonstandard gauge thickness detected:\n");
-                  sb.AppendFormat("{0} in {1} = {2}", swDim.Name, swView.Name, ourGauge);
+                  StringBuilder sb = new StringBuilder("Non-standard gauge thickness detected:\n");
+                  sb.AppendFormat("{0} in {1} = {2:0.000}", swDim.Name, swView.Name, ourGauge);
                   swApp.SendMsgToUser2(sb.ToString()
                       , (int)swMessageBoxIcon_e.swMbWarning
                       , (int)swMessageBoxBtn_e.swMbOk);
