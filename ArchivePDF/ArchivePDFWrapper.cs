@@ -16,6 +16,11 @@ namespace ArchivePDF.csproj {
       APathSet = ps;
     }
 
+		public void CheckGauges() {
+			GaugeSetter gs_ = new GaugeSetter(swApp, APathSet);
+			gs_.CheckAndUpdateGaugeNotes2();
+		}
+
     public void Archive() {
       string jsonPath = Properties.Settings.Default.defaultJSON;
 
