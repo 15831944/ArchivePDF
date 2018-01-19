@@ -84,7 +84,7 @@ namespace ArchivePDF.csproj {
 						dimtext = dimtext.Replace(@"(", string.Empty).Replace(@")", string.Empty).Trim();
 						if (gaugeRegex.IsMatch(dimtext)) {
 							string[] texts_ = dimtext.Split(' ');
-							gaugeNote = texts_[texts_.Length - 1];
+							gaugeNote = Regex.Replace(texts_[texts_.Length - 1], "[0-9]", string.Empty);
 							Double og;
 							if (!Double.TryParse(swDim.GetSystemValue2("").ToString(), out og)) {
 								throw new GaugeSetterException("Couldn't parse dimension value.");
