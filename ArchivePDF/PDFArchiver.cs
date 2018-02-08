@@ -410,7 +410,7 @@ namespace ArchivePDF.csproj {
 
 			foreach (String name in propNames) {
 				swCustPropMgr.Get5(name, false, out ValOut, out ResolvedValOut, out WasResolved);
-				if (name.Contains("REVISION") && ValOut != String.Empty)
+				if (name.Contains("REVISION") && !name.Contains(@"LEVEL") && ValOut != String.Empty)
 					result = "-" + ValOut;
 			}
 
