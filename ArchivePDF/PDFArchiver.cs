@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+
 using System.Runtime.InteropServices;
 
 using System.Data.SqlClient;
@@ -23,6 +23,7 @@ namespace ArchivePDF.csproj {
 		private String drawingPath = String.Empty;
 		private int drwKey = 0;
 		private bool metal;
+		private bool target = false;
 		//private Boolean shouldCheck = true;
 
 		/// <summary>
@@ -64,12 +65,13 @@ namespace ArchivePDF.csproj {
 
 		public View GetFirstView(SldWorks sw) {
 			ModelDoc2 swModel = (ModelDoc2)sw.ActiveDoc;
-			View v;
 			DrawingDoc d = (DrawingDoc)swModel;
+			View v;
 			string[] shtNames = (String[])swDraw.GetSheetNames();
 			string message = string.Empty;
 
 			//This should find the first page with something on it.
+			target = IsTarget((sw.ActiveDoc as DrawingDoc).Sheet[shtNames[0]]);
 			int x = 0;
 			do {
 				try {
@@ -140,6 +142,13 @@ namespace ArchivePDF.csproj {
 				}
 			}
 			return "AMS";
+		}
+
+		public bool IsTarget(Sheet sheet) {
+			if (sheet.GetTemplateName().ToUpper().Contains(@"TARGET_ASS")) {
+				return true;
+			}
+			return false;
 		}
 
 		public bool IsMetal(View v) {
