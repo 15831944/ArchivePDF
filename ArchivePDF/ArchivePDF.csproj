@@ -36,7 +36,34 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>rb.kf.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="itextsharp">
+      <HintPath>..\..\..\..\..\..\..\Program Files\RedBrick\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.pdfa">
+      <HintPath>..\..\..\..\..\..\..\Program Files\RedBrick\itextsharp.pdfa.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xtra">
+      <HintPath>..\..\..\..\..\..\..\Program Files\RedBrick\itextsharp.xtra.dll</HintPath>
+    </Reference>
     <Reference Include="SolidWorks.Interop.sldworks">
       <HintPath>..\..\..\..\..\..\..\Program Files\SolidWorks Corp\SolidWorks\api\redist\SolidWorks.Interop.sldworks.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -87,6 +114,7 @@
     </Compile>
     <Compile Include="Thumbnailer.cs" />
     <Compile Include="ThumbnailerException.cs" />
+    <Compile Include="UsefulInformationDestroyer.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ErrForm.resx" />
