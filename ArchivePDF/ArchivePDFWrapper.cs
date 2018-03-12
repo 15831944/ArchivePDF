@@ -106,6 +106,13 @@ namespace ArchivePDF.csproj {
 
 				if (APathSet.ExportEDrw && !pda.MetalDrawing)
 					res = res && pda.ExportEDrawings();
+
+				if (pda.IsTarget && pda.savedFile != string.Empty) {
+					string profilePath = string.Format(@"{0}{1}", Properties.Settings.Default.TargetProfilePath,
+						System.IO.Path.GetFileName(pda.savedFile));
+					UsefulInformationDestroyer uid_ = new UsefulInformationDestroyer(pda.savedFile, profilePath);
+					uid_.RedactUsefulDataFromDocument();
+				}
 			} catch (MustHaveRevException mhre) {
 				swApp.SendMsgToUser2(mhre.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
 			} catch (MustSaveException mse) {
@@ -126,6 +133,7 @@ namespace ArchivePDF.csproj {
 				ErrMsg em = new ErrMsg(ex);
 				em.ShowDialog();
 			}
+
 			return res;
 		}
 

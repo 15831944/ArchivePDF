@@ -22,8 +22,9 @@ namespace ArchivePDF.csproj {
 		private String sourcePath = String.Empty;
 		private String drawingPath = String.Empty;
 		private int drwKey = 0;
+		public bool IsTarget = false;
+		public string savedFile = string.Empty;
 		private bool metal;
-		private bool target = false;
 		//private Boolean shouldCheck = true;
 
 		/// <summary>
@@ -71,7 +72,7 @@ namespace ArchivePDF.csproj {
 			string message = string.Empty;
 
 			//This should find the first page with something on it.
-			target = IsTarget((sw.ActiveDoc as DrawingDoc).Sheet[shtNames[0]]);
+			IsTarget = IsTargetDrawing((sw.ActiveDoc as DrawingDoc).Sheet[shtNames[0]]);
 			int x = 0;
 			do {
 				try {
@@ -144,7 +145,7 @@ namespace ArchivePDF.csproj {
 			return "AMS";
 		}
 
-		public bool IsTarget(Sheet sheet) {
+		private bool IsTargetDrawing(Sheet sheet) {
 			if (sheet.GetTemplateName().ToUpper().Contains(@"TARGET_ASS")) {
 				return true;
 			}
@@ -336,7 +337,7 @@ namespace ArchivePDF.csproj {
 
 					swFrame.SetStatusBarText(String.Format("Exporting '{0}'", fileName));
 					swExportPDFData = swApp.GetExportFileData((int)swExportDataFileType_e.swExportPdfData);
-					swModExt = (ModelDocExtension)swModel.Extension;
+					swModExt = swModel.Extension;
 					success = swExportPDFData.SetSheets((int)swExportDataSheetsToExport_e.swExportData_ExportAllSheets, (dr));
 					success = swModExt.SaveAs(tmpFile, saveVersion, saveOptions, swExportPDFData, ref refErrors, ref refWarnings);
 
@@ -384,6 +385,7 @@ namespace ArchivePDF.csproj {
 						swFrame.SetStatusBarText(String.Format("Exported '{0}'", fileName));
 
 						if ((fileName.StartsWith(Properties.Settings.Default.KPath) && fileName.EndsWith("PDF")) && APathSet.WriteToDb) {
+							savedFile = fileName;
 							InsertIntoDb(fileName, Properties.Settings.Default.table);
 							drwKey = GetKeyCol(fi.Name);
 						}
