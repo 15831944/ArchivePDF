@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -71,7 +70,7 @@ namespace Thumbnail {
 				bool bRet;
 				double xSize = 2 * .0254;
 				double ySize = 2 * .0254;
-				double xCenter = (xSize / 2) - ArchivePDF.csproj.Properties.Settings.Default.WeirdArbitraryFactor;
+				double xCenter = (xSize / 2) - Settings.Default.WeirdArbitraryFactor;
 				double yCenter = (ySize / 2);
 
 				swDwgPaperSizes_e paperSize = swDwgPaperSizes_e.swDwgPapersUserDefined;
@@ -134,7 +133,7 @@ namespace Thumbnail {
 						xSize = 2 * 0.0254;
 						ySize = 2 * 0.0254;
 
-						xCenter = (xSize / 2) - ArchivePDF.csproj.Properties.Settings.Default.WeirdArbitraryFactor;
+						xCenter = (xSize / 2) - Settings.Default.WeirdArbitraryFactor;
 						yCenter = (ySize / 2);
 						orientation = "*Trimetric";
 						break;
