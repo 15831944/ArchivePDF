@@ -171,9 +171,9 @@ namespace ArchivePDF.csproj {
 			}
 			int res;
 
-			res = gcpm.Get5("DEPTID", useCached, out _value, out _resValue, out wasResolved);
+			res = gcpm.Get5("DEPARTMENT", useCached, out _value, out _resValue, out wasResolved);
 			if (_value == string.Empty) {
-				res = gcpm.Get5("DEPARTMENT", useCached, out _value, out _resValue, out wasResolved);
+				res = gcpm.Get5("DEPTID", useCached, out _value, out _resValue, out wasResolved);
 				if (_value == string.Empty) {
 					res = scpm.Get5("DEPARTMENT", useCached, out _value, out _resValue, out wasResolved);
 				}
