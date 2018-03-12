@@ -1,4 +1,4 @@
-* ArchivePDF v2.3
+* ArchivePDF v2.4
 
 This gizmo archives SolidWorks drawings.
 
