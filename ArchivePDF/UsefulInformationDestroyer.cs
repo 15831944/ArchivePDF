@@ -52,10 +52,19 @@ namespace ArchivePDF.csproj {
 										sourceECRRectangle.BackgroundColor = BaseColor.WHITE;
 										Rectangle sourceDescrRectangle = new Rectangle(73, y_offset, 988, y_offset + 10);
 										sourceDescrRectangle.BackgroundColor = BaseColor.WHITE;
+										Rectangle sourceDrwnBy = new Rectangle(991, y_offset, 1061, y_offset + 10);
+										sourceDrwnBy.BackgroundColor = BaseColor.WHITE;
+										Rectangle sourceAppBy = new Rectangle(1063, y_offset, 1133, y_offset + 10);
+										sourceAppBy.BackgroundColor = BaseColor.WHITE;
+										Rectangle sourceDate = new Rectangle(1135, y_offset, 1205, y_offset + 10);
+										sourceDate.BackgroundColor = BaseColor.WHITE;
 
 										contentByte.Rectangle(sourceRevRectangle);
 										contentByte.Rectangle(sourceECRRectangle);
 										contentByte.Rectangle(sourceDescrRectangle);
+										contentByte.Rectangle(sourceDrwnBy);
+										contentByte.Rectangle(sourceAppBy);
+										contentByte.Rectangle(sourceDate);
 
 										pageStamp.AlterContents();
 
