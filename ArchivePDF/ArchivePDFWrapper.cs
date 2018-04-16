@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 using Thumbnail;

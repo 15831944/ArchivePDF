@@ -61,9 +61,6 @@
     <Reference Include="itextsharp.pdfa">
       <HintPath>..\..\..\..\..\..\..\Program Files\RedBrick\itextsharp.pdfa.dll</HintPath>
     </Reference>
-    <Reference Include="itextsharp.xtra">
-      <HintPath>..\..\..\..\..\..\..\Program Files\RedBrick\itextsharp.xtra.dll</HintPath>
-    </Reference>
     <Reference Include="SolidWorks.Interop.sldworks">
       <HintPath>..\..\..\..\..\..\..\Program Files\SolidWorks Corp\SolidWorks\api\redist\SolidWorks.Interop.sldworks.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
