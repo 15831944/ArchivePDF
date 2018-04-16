@@ -5,6 +5,8 @@ This gizmo archives SolidWorks drawings.
 ** References
 - SolidWorks.Interop.SldWorks
 - SolidWorks.Interop.swconst
+- itextsharp
+- itextsharp.pdfa
 *** Licenses
 GPLv2
 
