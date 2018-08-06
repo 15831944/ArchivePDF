@@ -209,13 +209,34 @@ namespace ArchivePDF.csproj {
 
 				Boolean success = SaveFiles(pdfTarget);
 
-				if (metal && APathSet.WriteToDb && !_metalDrawing)
+				if (metal && APathSet.WriteToDb && !_metalDrawing && find_pdf(pdfSourceName))
 					AlertSomeone(pdfTarget[0]);
 
 				return success;
 			} else {
 				Boolean success = ExportMetalPdfs();
 				return success;
+			}
+		}
+
+		private bool find_pdf(string doc) {
+			string searchterm_ = string.Format(@"{0}.PDF", doc);
+			using (SqlConnection conn = new SqlConnection(Properties.Settings.Default.connectionString)) {
+				string sql_ = @"SELECT FileID, FName, FPath, DateCreated FROM GEN_DRAWINGS_MTL WHERE(FName = @fname)";
+				using (SqlCommand comm = new SqlCommand(sql_, conn)) {
+					comm.Parameters.AddWithValue(@"@fname", searchterm_);
+					try {
+						if (conn.State == System.Data.ConnectionState.Closed) {
+							conn.Open();
+						}
+
+						using (SqlDataReader reader_ = comm.ExecuteReader()) {
+							return reader_.HasRows;
+						}
+					} catch (InvalidOperationException ioe) {
+						throw new ExportPDFException(@"I just didn't want to open the connection.");
+					}
+				}
 			}
 		}
 
