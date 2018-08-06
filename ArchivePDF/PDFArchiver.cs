@@ -357,12 +357,16 @@ namespace ArchivePDF.csproj {
 					}
 
 					swFrame.SetStatusBarText(String.Format("Exporting '{0}'", fileName));
+					bool layerPrint = swApp.GetUserPreferenceToggle((int)swUserPreferenceToggle_e.swPDFExportIncludeLayersNotToPrint);
+					swApp.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swPDFExportIncludeLayersNotToPrint, true);
 					swExportPDFData = swApp.GetExportFileData((int)swExportDataFileType_e.swExportPdfData);
 					swModExt = swModel.Extension;
 					success = swExportPDFData.SetSheets((int)swExportDataSheetsToExport_e.swExportData_ExportAllSheets, (dr));
 					success = swModExt.SaveAs(tmpFile, saveVersion, saveOptions, swExportPDFData, ref refErrors, ref refWarnings);
-
 					//success = swModel.SaveAs4(tmpFile, saveVersion, saveOptions, ref refErrors, ref refWarnings);
+
+					swApp.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swPDFExportIncludeLayersNotToPrint, layerPrint);
+
 					try {
 						File.Copy(tmpFile, fileName, true);
 					} catch (UnauthorizedAccessException uae) {
