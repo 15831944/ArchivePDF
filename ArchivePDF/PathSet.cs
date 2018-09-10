@@ -98,5 +98,7 @@ namespace ArchivePDF.csproj {
 			get { return _writeToDb; }
 			set { _writeToDb = value; }
 		}
+
+		public bool ExportSTEP { get; set; }
 	}
 }

@@ -302,6 +302,10 @@ namespace ArchivePDF.csproj {
 
 			target.Add(String.Format("{0}{1}\\{2}{3}", APathSet.KPath, altPath, sourceName, fFormat));
 			target.Add(String.Format("{0}{1}\\{2}{3}{4}", APathSet.GPath, altPath, sourceName, Rev, fFormat));
+			if (APathSet.ExportSTEP) {
+				target.Add(String.Format("{0}{1}\\{2}{3}", APathSet.KPath, altPath, sourceName, @".STEP"));
+				target.Add(String.Format("{0}{1}\\{2}{3}{4}", APathSet.GPath, altPath, sourceName, Rev, @".STEP"));
+			}
 
 			Boolean success = SaveFiles(target);
 
@@ -319,6 +323,7 @@ namespace ArchivePDF.csproj {
 
 			return success;
 		}
+
 		/// <summary>
 		/// This thing does the saving.
 		/// </summary>
