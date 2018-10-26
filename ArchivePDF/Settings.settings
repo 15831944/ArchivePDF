@@ -96,7 +96,7 @@
   &lt;string&gt;\\AMSTORE-SVR-22\cad\Solid Works\\AMSTORE_SHEET_FORMATS\\zThm.slddrt&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
-    <Setting Name="BMPPath" Type="System.String" Scope="User">
+    <Setting Name="AribaPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">\\AMSTORE-SVR-02\shared\shared\general\KOHLS\Ariba Label Images\</Value>
     </Setting>
     <Setting Name="WeirdArbitraryFactor" Type="System.Double" Scope="User">

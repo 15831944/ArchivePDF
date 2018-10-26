@@ -159,7 +159,7 @@ namespace Thumbnail {
 
 				switch (monochrome[i]) {
 					case true:
-						SaveAsBMP(Settings.Default.BMPPath);
+						SaveAribaLabel(Settings.Default.AribaPath);
 						break;
 					case false:
 						SaveAsJPG(Settings.Default.JPGPath);
@@ -276,7 +276,7 @@ namespace Thumbnail {
 			bRet = swModel.SaveAs4(tempFileName, saveVersion, saveOptions, ref refErrors, ref refWarnings);
 		}
 
-		public void SaveAsBMP(string targetPath) {
+		public void SaveAribaLabel(string targetPath) {
 			bool bRet;
 			string tmpPath = Path.GetTempPath();
 			StringBuilder tp = new StringBuilder(targetPath);
@@ -301,7 +301,7 @@ namespace Thumbnail {
 				p.EnableRaisingEvents = false;
 				p.StartInfo.FileName = string.Format(@"{0}\convert.exe ", imPath);
 				// I'll just resize. ImageMagick can't mess this up, right?
-				p.StartInfo.Arguments = string.Format("\"{0}\" -resize 192x192! -colors 2 \"{1}{2}.bmp\"",
+				p.StartInfo.Arguments = string.Format("\"{0}\" -resize 192x192! -colors 2 \"{1}{2}.jpg\"",
 					targetFilename.ToString(),
 					tp.ToString(),
 					Path.GetFileNameWithoutExtension(drawingPath));
