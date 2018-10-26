@@ -778,6 +778,10 @@ namespace ArchivePDF.csproj {
 			int insRes;
 			bool uncheckedExists = UncheckedAlertExists(path);
 
+			if (uncheckedExists) {
+				return;
+			}
+
 			if (drwKey == 0) return;
 
 			try {
@@ -794,22 +798,21 @@ namespace ArchivePDF.csproj {
 			try {
 				string sql = string.Empty;
 				SqlCommand command = new SqlCommand();
-				if (!uncheckedExists) {
-					sql = @"INSERT INTO dbo.GEN_ALERTS (ALERTTYPE, ALERTDESC, ALERTMSG, ALERTKEYCOL) VALUES (@atype, @adesc, @amsg, @akc);";
-					command = new SqlCommand(sql, connection);
-					command.Parameters.AddWithValue("@atype", 1);
-					command.Parameters.AddWithValue("@adesc", fi.Name);
-					command.Parameters.AddWithValue("@amsg", string.Format("Updated by {0}.", System.Environment.UserName));
-					command.Parameters.AddWithValue("@akc", drwKey);
-					insRes = command.ExecuteNonQuery();
-				} else {
-					sql = @"UPDATE dbo.GEN_ALERTS SET ALERTDATE = @aDate, ALERTMSG = @amsg WHERE ALERTDESC = @fname;";
-					command = new SqlCommand(sql, connection);
-					command.Parameters.AddWithValue("@aDate", DateTime.Now);
-					command.Parameters.AddWithValue("@amsg", string.Format("Updated by {0}.", System.Environment.UserName));
-					command.Parameters.AddWithValue("@fname", fi.Name);
-					insRes = command.ExecuteNonQuery();
-				}
+				sql = @"INSERT INTO dbo.GEN_ALERTS (ALERTTYPE, ALERTDESC, ALERTMSG, ALERTKEYCOL) VALUES (@atype, @adesc, @amsg, @akc);";
+				command = new SqlCommand(sql, connection);
+				command.Parameters.AddWithValue("@atype", 1);
+				command.Parameters.AddWithValue("@adesc", fi.Name);
+				command.Parameters.AddWithValue("@amsg", string.Format("Updated by {0}.", System.Environment.UserName));
+				command.Parameters.AddWithValue("@akc", drwKey);
+				insRes = command.ExecuteNonQuery();
+				//else {
+				//	sql = @"UPDATE dbo.GEN_ALERTS SET ALERTDATE = @aDate, ALERTMSG = @amsg WHERE ALERTDESC = @fname;";
+				//	command = new SqlCommand(sql, connection);
+				//	command.Parameters.AddWithValue("@aDate", DateTime.Now);
+				//	command.Parameters.AddWithValue("@amsg", string.Format("Updated by {0}.", System.Environment.UserName));
+				//	command.Parameters.AddWithValue("@fname", fi.Name);
+				//	insRes = command.ExecuteNonQuery();
+				//}
 
 			} catch (InvalidCastException ice) {
 				throw new ExportPDFException("Invalid cast exception.", ice);
