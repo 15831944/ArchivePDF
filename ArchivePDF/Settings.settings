@@ -32,7 +32,7 @@
     <Setting Name="ExportImg" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="table" Type="System.String" Scope="Application">
+    <Setting Name="PDFTable" Type="System.String" Scope="Application">
       <Value Profile="(Default)">dbo.GEN_DRAWINGS</Value>
     </Setting>
     <Setting Name="basename" Type="System.String" Scope="Application">
@@ -107,6 +107,9 @@
     </Setting>
     <Setting Name="TargetProfilePath" Type="System.String" Scope="User">
       <Value Profile="(Default)">K:\TARGET\PROFILE\</Value>
+    </Setting>
+    <Setting Name="eDrawingTable" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">dbo.GEN_DRAWINGS_EDRW</Value>
     </Setting>
   </Settings>
 </SettingsFile>

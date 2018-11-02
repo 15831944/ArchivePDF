@@ -131,9 +131,9 @@ namespace ArchivePDF.csproj.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("dbo.GEN_DRAWINGS")]
-        public string table {
+        public string PDFTable {
             get {
-                return ((string)(this["table"]));
+                return ((string)(this["PDFTable"]));
             }
         }
         
@@ -328,6 +328,15 @@ namespace ArchivePDF.csproj.Properties {
             }
             set {
                 this["TargetProfilePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("dbo.GEN_DRAWINGS_EDRW")]
+        public string eDrawingTable {
+            get {
+                return ((string)(this["eDrawingTable"]));
             }
         }
     }

@@ -414,10 +414,15 @@ namespace ArchivePDF.csproj {
 					if (success) {
 						swFrame.SetStatusBarText(String.Format("Exported '{0}'", fileName));
 
-						if ((fileName.StartsWith(Properties.Settings.Default.KPath) && fileName.EndsWith("PDF")) && APathSet.WriteToDb) {
+						if (fileName.StartsWith(Properties.Settings.Default.KPath) && APathSet.WriteToDb) {
 							savedFile = fileName;
-							InsertIntoDb(fileName, Properties.Settings.Default.table);
-							drwKey = GetKeyCol(fi.Name);
+							if (fileName.EndsWith("PDF")) {
+								InsertIntoDb(fileName, Properties.Settings.Default.PDFTable);
+								drwKey = GetKeyCol(fi.Name);
+							}
+							if (fileName.EndsWith(@"EPRT") || fileName.EndsWith("EASM")) {
+								InsertIntoDb(fileName, Properties.Settings.Default.eDrawingTable);
+							}
 						}
 
 						if ((fileName.StartsWith(Properties.Settings.Default.MetalPath) && fileName.EndsWith("PDF")) && APathSet.WriteToDb) {
@@ -592,7 +597,7 @@ namespace ArchivePDF.csproj {
 									.Replace(Properties.Settings.Default.KPath, Properties.Settings.Default.KMapped)
 									.Replace(Properties.Settings.Default.MetalPath, Properties.Settings.Default.SMapped) + @"\");
 				command.Parameters.AddWithValue("@fdate", DateTime.Now);
-				command.Parameters.AddWithValue("@filename", fi.Name);
+				command.Parameters.AddWithValue("@filename", fi.Name.ToUpper());
 
 				int aff = command.ExecuteNonQuery();
 				if (aff > 0) {
@@ -669,7 +674,7 @@ namespace ArchivePDF.csproj {
 
 			try {
 				SqlCommand comm = new SqlCommand("SELECT FileID " +
-					string.Format("FROM {0} ", Properties.Settings.Default.table) +
+					string.Format("FROM {0} ", Properties.Settings.Default.PDFTable) +
 					"WHERE FName COLLATE Latin1_General_CI_AI LIKE @fname " +
 					"ORDER BY DateCreated DESC", connection);
 				comm.Parameters.AddWithValue("@fname", pathlessFilename);
