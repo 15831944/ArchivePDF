@@ -56,9 +56,9 @@
     <Setting Name="connectionString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Server=AMSTORE-SQL-05;Database=ENGINEERING;Trusted_Connection=True;&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;Server=AMSTORE-SQL-07;Database=ENGINEERING;Trusted_Connection=True;&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Server=AMSTORE-SQL-05;Database=ENGINEERING;Trusted_Connection=True;</Value>
+      <Value Profile="(Default)">Server=AMSTORE-SQL-07;Database=ENGINEERING;Trusted_Connection=True;</Value>
     </Setting>
     <Setting Name="localJSON" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\Optimize\ArchivePDF.json</Value>

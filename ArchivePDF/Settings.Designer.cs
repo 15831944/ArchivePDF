@@ -197,7 +197,7 @@ namespace ArchivePDF.csproj.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=AMSTORE-SQL-05;Database=ENGINEERING;Trusted_Connection=True;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=AMSTORE-SQL-07;Database=ENGINEERING;Trusted_Connection=True;")]
         public string connectionString {
             get {
                 return ((string)(this["connectionString"]));
