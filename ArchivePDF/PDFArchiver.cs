@@ -198,8 +198,10 @@ namespace ArchivePDF.csproj {
 			String fFormat = String.Empty;
 			ModelDocExtension swModExt = swModel.Extension;
 			String Rev = GetRev(swModExt);
-			if (Rev.Length > 2)
-				CorrectLayers(Rev, chooseLayer);
+			if (Rev.Length > 2) {
+				//CorrectLayers(Rev, chooseLayer);
+				chooseLayer(Rev);
+			}
 
 			List<String> pdfTarget = new List<string>();
 
