@@ -684,7 +684,7 @@ namespace ArchivePDF.csproj {
 						Properties.Settings.Default.basename,
 						fi.Name);
 
-				swFrame.SetStatusBarText(sql);
+				swFrame.SetStatusBarText(sql.Replace(@"@filename", "\"" + fi.Name + "\""));
 
 				SqlCommand command = new SqlCommand(sql, connection);
 				command.Parameters.AddWithValue("@fpath", fi.DirectoryName
