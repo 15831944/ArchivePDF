@@ -267,7 +267,8 @@ namespace ArchivePDF.csproj {
 			String Rev = GetRev(swModExt);
 			String fFormat = String.Empty;
 			List<string> ml = get_list_of_open_docs();
-			List<String> target = new List<string>();
+			List<String> EdrwTarget = new List<string>();
+			List<String> STEPTarget = new List<string>();
 			Boolean measurable = true;
 			Int32 options = 0;
 			Int32 errors = 0;
@@ -300,14 +301,17 @@ namespace ArchivePDF.csproj {
 				measurable = true;
 			}
 
-			target.Add(String.Format("{0}{1}\\{2}{3}", APathSet.KPath, altPath, sourceName, fFormat));
-			target.Add(String.Format("{0}{1}\\{2}{3}{4}", APathSet.GPath, altPath, sourceName, Rev, fFormat));
+			EdrwTarget.Add(String.Format("{0}{1}\\{2}{3}", APathSet.KPath, altPath, sourceName, fFormat));
+			EdrwTarget.Add(String.Format("{0}{1}\\{2}{3}{4}", APathSet.GPath, altPath, sourceName, Rev, fFormat));
 			if (APathSet.ExportSTEP) {
-				target.Add(String.Format("{0}{1}\\{2}{3}", APathSet.KPath, altPath, sourceName, @".STEP"));
-				target.Add(String.Format("{0}{1}\\{2}{3}{4}", APathSet.GPath, altPath, sourceName, Rev, @".STEP"));
+				STEPTarget.Add(String.Format("{0}{1}\\{2}{3}", APathSet.KPath, altPath, sourceName, @".STEP"));
+				STEPTarget.Add(String.Format("{0}{1}\\{2}{3}{4}", APathSet.GPath, altPath, sourceName, Rev, @".STEP"));
 			}
 
-			Boolean success = SaveFiles(target);
+			Boolean success = SaveSTEPorEDrw(EdrwTarget);
+			if (STEPTarget.Count > 0) {
+				success = SaveSTEPorEDrw(STEPTarget);
+			}
 
 			if (!measurable)
 				swApp.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swEDrawingsOkayToMeasure, false);
@@ -322,6 +326,95 @@ namespace ArchivePDF.csproj {
 			swApp.ActivateDoc3(currentDoc.GetTitle(), true, (int)swRebuildOnActivation_e.swDontRebuildActiveDoc, ref err);
 
 			return success;
+		}
+
+		private bool SaveSTEPorEDrw(List<string> fl) {
+			if (fl.Count < 1) {
+				return false;
+			}
+
+			int saveVersion = (int)swSaveAsVersion_e.swSaveAsCurrentVersion;
+			int saveOptions = (int)swSaveAsOptions_e.swSaveAsOptions_Silent;
+			int refErrors = 0;
+			int refWarnings = 0;
+			bool success = true;
+
+			string tmpPath = Path.GetTempPath();
+			ModelDocExtension swModExt = default(ModelDocExtension);
+			ExportPdfData swExportPDFData = default(ExportPdfData);
+
+			string fileName = fl[0];
+			FileInfo fi = new FileInfo(fileName);
+			string tmpFile = tmpPath + "\\" + fi.Name;
+			swModExt = swModel.Extension;
+
+			bool stepconf = swApp.GetUserPreferenceToggle((int)swUserPreferenceToggle_e.swStepExportConfigurationData);
+			bool stepedgeprop = swApp.GetUserPreferenceToggle((int)swUserPreferenceToggle_e.swStepExportFaceEdgeProps);
+			bool stepsplit = swApp.GetUserPreferenceToggle((int)swUserPreferenceToggle_e.swStepExportSplitPeriodic);
+			bool stepcurve = swApp.GetUserPreferenceToggle((int)swUserPreferenceToggle_e.swStepExport3DCurveFeatures);
+
+			int stepAP = swApp.GetUserPreferenceIntegerValue((int)swUserPreferenceIntegerValue_e.swStepAP);
+
+			swApp.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swStepExportConfigurationData, true);
+			swApp.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swStepExportFaceEdgeProps, true);
+			swApp.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swStepExportSplitPeriodic, true);
+			swApp.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swStepExport3DCurveFeatures, false);
+			swApp.SetUserPreferenceIntegerValue((int)swUserPreferenceIntegerValue_e.swStepAP, 203);
+
+			swFrame.SetStatusBarText(String.Format("Exporting '{0}'", fileName));
+			success = swModExt.SaveAs(tmpFile, saveVersion, saveOptions, swExportPDFData, ref refErrors, ref refWarnings);
+
+			swApp.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swStepExportConfigurationData, stepconf);
+			swApp.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swStepExportFaceEdgeProps, stepedgeprop);
+			swApp.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swStepExportSplitPeriodic, stepsplit);
+			swApp.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swStepExport3DCurveFeatures, stepcurve);
+			swApp.SetUserPreferenceIntegerValue((int)swUserPreferenceIntegerValue_e.swStepAP, stepAP);
+
+			foreach (string fn in fl) {
+				CopyFile(tmpFile, fn);
+			}
+			if (fl[0].EndsWith(@"EPRT") || fl[0].EndsWith(@"EASM")) {
+				InsertIntoDb(fl[0], Properties.Settings.Default.eDrawingTable);
+			}
+			return success;
+		}
+
+		private bool CopyFile(string tmpFile, string fileName) {
+			try {
+				File.Copy(tmpFile, fileName, true);
+			} catch (UnauthorizedAccessException uae) {
+				throw new ExportPDFException(
+						String.Format("You don't have the reqired permission to access '{0}'.", fileName),
+						uae);
+			} catch (ArgumentException ae) {
+				throw new ExportPDFException(
+						String.Format("Either '{0}' or '{1}' is not a proper file name.", tmpFile, fileName),
+						ae);
+			} catch (PathTooLongException ptle) {
+				throw new ExportPDFException(
+						String.Format("Source='{0}'; Dest='{1}' <= One of these is too long.", tmpFile, fileName),
+						ptle);
+			} catch (DirectoryNotFoundException dnfe) {
+				throw new ExportPDFException(
+						String.Format("Source='{0}'; Dest='{1}' <= One of these is invalid.", tmpFile, fileName),
+						dnfe);
+			} catch (FileNotFoundException fnfe) {
+				throw new ExportPDFException(
+						String.Format("Crap! I lost '{0}'!", tmpFile),
+						fnfe);
+			} catch (IOException) {
+				System.Windows.Forms.MessageBox.Show(
+						String.Format("If you have the file, '{0}', selected in an Explorer window, " +
+						"you may have to close it.", fileName), "This file is open somewhere.",
+						System.Windows.Forms.MessageBoxButtons.OK,
+						System.Windows.Forms.MessageBoxIcon.Error);
+				return false;
+			} catch (NotSupportedException nse) {
+				throw new ExportPDFException(
+						String.Format("Source='{0}'; Dest='{1}' <= One of these is an invalid format.",
+						tmpFile, fileName), nse);
+			}
+			return true;
 		}
 
 		/// <summary>
