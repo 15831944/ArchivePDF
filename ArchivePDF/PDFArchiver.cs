@@ -602,7 +602,8 @@ namespace ArchivePDF.csproj {
 
 		private ArchivePDF.csproj.PathSet _ps;
 
-		public ArchivePDF.csproj.PathSet APathSet {
+		public ArchivePDF.csproj.PathSet APathSet
+		{
 			get { return _ps; }
 			set { _ps = value; }
 		}
@@ -931,7 +932,8 @@ namespace ArchivePDF.csproj {
 		/// <summary>
 		/// Is this a metal drawing? This will be figured out after a pdf is archived.
 		/// </summary>
-		public bool MetalDrawing {
+		public bool MetalDrawing
+		{
 			get { return _metalDrawing; }
 			set { _metalDrawing = value; }
 		}
